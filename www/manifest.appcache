@@ -1,11 +1,12 @@
 CACHE MANIFEST
-#VERSION 41
+#VERSION 42
 /index.html
 /show.html
 /css/passec.css
 /js/passec.js
 /manifest.webapp
 /mscp/js/browser.js
+/mscp/libs/js/aes.js
 /mscp/libs/js/jquery.min.js
 /mscp/libs/js/jquery.cookie.js
 /mscp/libs/css/popupcreator.css
