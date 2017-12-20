@@ -60,5 +60,5 @@ typings/
 
 setup.json
 www/test.html
-package-log.json
+package-lock.json
 todo.txt
