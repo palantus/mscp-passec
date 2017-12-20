@@ -1,0 +1,105 @@
+<!doctype html>
+<html><!--<html manifest="/manifest.appcache">-->
+<head>
+<meta charset="utf-8" />
+	<title>Passec</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=10,IE=9,IE=8,IE=edge" />
+	<meta name="viewport" content="width=device-width, user-scalable=no">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+
+	<link rel="icon" sizes="196x196" href="/img/lock_196.png">
+	<link rel="apple-touch-icon" sizes="196x196" href="/img/lock_196.png" />
+	<link rel="icon" sizes="128x128" href="/img/lock_128.png">
+	<link rel="apple-touch-icon" sizes="128x128" href="/img/lock_128.png" />
+
+	<script src="/mscp/libs/js/jquery.min.js"></script>
+	<script src="/mscp/libs/js/aes.js"></script>
+	<link rel="stylesheet" type="text/css" href="/css/passec.css" />
+	<script src="/mscp/js/browser.js"></script>
+	<script src="/js/passec.js"></script>
+
+	<script>
+		$(function() {
+			init();
+		});
+	</script>
+</head>
+<body>
+
+<div id="maintitle">
+	<img src="/img/lock_196.png"/><h1>Passec</h1>
+</div>
+
+<hr>
+
+<div id="list">
+	<div id="searchcontainer"><input id="searchbox" type="text" placeholder="Search..."/></div>
+	<h4>Filters</h4>
+	<div id="taglist">
+		<div class="tag" data-type="all">All</div>
+		<div class="tag" data-type="notag">Missing tag</div>
+		<!--<div class="tag" data-type="trash">Trash</div>-->
+		<br>
+		<div id="customtags">
+		</div>
+
+	</div>
+	<h4>Actions:</h4>
+	<a href="#" id="addpass" class="leftmenulink">- New password</a><br/>
+	<a href="#" class="leftmenulink" onclick="backup()">- Backup</a><br/>
+</div>
+
+<hr>
+
+<div id="title">
+	<h2 id="titletext">All passwords</h2>
+</div>
+
+<div id="content">
+		<table id="passwordlist" cellspacing="0px">
+			<thead>
+				<td>Title</td>
+				<td>Username</td>
+				<td>Tags</td>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+
+		<hr>
+
+</div>
+
+<div id="keyprompt" class="popup">
+	<div class="content">
+		Please enter a password or sentence for encryption/decryption:<br>
+		<input type="password" id="bucketpassword"/><br>
+		<button id="bucketpasswordok">Ok</button>
+		<button id="bucketpasswordshowhidechars">Show input</button>
+	</div>
+</div>
+
+<div id="passwordshow" class="popup">
+	<div class="content">
+		Title:<br>
+		<input type="text" id="curpassword_title"/><br>
+
+		Username:<br>
+		<input type="text" id="curpassword_username"/><br>
+
+		Password:<br>
+		<input type="text" id="curpassword_password"/><br>
+
+		Tags:<br>
+		<input type="text" id="curpassword_tags"/><br>
+
+		<button id="curpassword_save" disabled>Save</button>
+		<button id="curpassword_close">Close</button>
+		<button id="curpassword_trash" disabled>Trash</button>
+		<button id="curpassword_random">Random</button>
+	</div>
+</div>
+
+</body>
+</html>

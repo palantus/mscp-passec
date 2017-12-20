@@ -1,0 +1,46 @@
+{
+  "name": "passec",
+  "serve": [
+    {
+      "name": "getBucket",
+      "title": "",
+      "description": "",
+      "returntype": "object",
+      "namespace": "",
+      "default": "get",
+      "args": [
+        {
+          "name": "bucketId",
+          "title": "",
+          "type": "string",
+          "required": true,
+          "description": ""
+        }
+      ]
+    },
+    {
+      "name": "syncChanges",
+      "title": "",
+      "description": "",
+      "returntype": "boolean",
+      "namespace": "",
+      "default": "",
+      "args": [
+        {
+          "name": "bucketId",
+          "title": "",
+          "type": "string",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "passwords",
+          "title": "",
+          "type": "array",
+          "required": true,
+          "description": ""
+        }
+      ]
+    }
+  ]
+}

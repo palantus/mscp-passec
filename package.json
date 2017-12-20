@@ -1,0 +1,9 @@
+{
+ "name": "mscp-passec",
+ "version": "1.0.0",
+ "main": "main.js",
+ "dependencies": {
+  "sqlite3": "*",
+  "mscp": "*"
+ }
+}

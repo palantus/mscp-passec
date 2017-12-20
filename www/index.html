@@ -1,0 +1,173 @@
+<!doctype html>
+<html manifest="/manifest.appcache">
+<head>
+<meta charset="utf-8" />
+	<title>Passec</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=10,IE=9,IE=8,IE=edge" />
+	<meta name="viewport" content="width=device-width, user-scalable=no">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+
+	<link rel="icon" sizes="196x196" href="/img/lock_196.png">
+	<link rel="apple-touch-icon" sizes="196x196" href="/img/lock_196.png" />
+	<link rel="icon" sizes="128x128" href="/img/lock_128.png">
+	<link rel="apple-touch-icon" sizes="128x128" href="/img/lock_128.png" />
+
+	<script src="/mscp/libs/js/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/css/passec.css" />
+
+	<script>
+		function getUrlVar(b) {
+		    b = b.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+		    b = (new RegExp("[\\?&]" + b + "=([^&#]*)")).exec(window.location.href);
+		    return null == b ? void 0 : decodeURIComponent(b[1])
+		}
+
+		if(window.navigator.mozApps){
+			$("#installapp").show();
+
+			var request = window.navigator.mozApps.getSelf();
+			request.onsuccess = function () {
+				if(this.result){
+					if(localStorage["FFAppBucket"]){
+						window.location = "/show.html?b=" + localStorage["FFAppBucket"];
+					}
+				}
+			};
+		}
+
+		if(getUrlVar("b") != undefined){
+			window.location = "/show.html?b=" + getUrlVar("b");
+		}
+
+		$(function() {
+			$("#newrandom").click(function(){
+				bid = guid();
+				window.location = "/show.html?b=" + bid;
+			});
+			/*
+			$("#new").click(function(){
+				var bid = prompt("Enter a bucket ID:");
+				if (bid !== null && bid !== false) { // Canceled
+					if(bid)
+						window.location = "/passec/show.html?b=" + bid;
+				}
+
+			});
+			*/
+			$("#installapp").click(function(){
+				if(window.navigator.mozApps){
+					console.log("Installing app...")
+					var request = window.navigator.mozApps.install("https://passec.ahkpro.dk/manifest.webapp");
+					request.onsuccess = function () {
+						// Save the App object that is returned
+						var appRecord = this.result;
+						console.log(appRecord);
+						alert('Installation successful!');
+					};
+					request.onerror = function () {
+						// Display the error information from the DOMError object
+						console.log(this.error);
+						alert('Install failed, error: ' + this.error.name);
+					};
+				}
+			});
+
+			$("#new").click(function(){
+				$("#bucketprompt").fadeIn();
+				$("#openbucketid").focus();
+			});
+
+			$("#bucketok").click(function(){
+				var bid = $("#openbucketid").val();
+				if(bid){
+					window.location = "/show.html?b=" + bid;
+					$("#bucketprompt").fadeOut();
+				}
+			});
+
+			$("#bucketcancel").click(function(){
+				$("#bucketprompt").fadeOut();
+			});
+
+			if(window.navigator.mozApps){
+				$("#installapp").show();
+			}
+		});
+	</script>
+</head>
+<body>
+
+<div id="maintitle">
+	<img src="/img/lock_196.png"/><h1>Passec</h1>
+</div>
+
+<hr>
+
+<div id="list">
+	<br/>
+	<br/>
+	<div id="taglist">
+		<div class="tag" data-type="all" id="new">Open bucket</div>
+		<div class="tag" data-type="notag" id="newrandom">New random bucket</div>
+		<div class="tag" id="installapp" style="display:none;">Install App</div>
+		</div>
+	</div>
+</div>
+
+<hr>
+
+<div id="title">
+	<h2 id="titletext">About</h2>
+</div>
+
+<div id="content" style="width: auto;">
+	<div id="aboutcontent">
+		<h3>What is Passec?</h3>
+		Passec is a password manager which is designed to be very easy to use across all platforms and, of course, very secure.
+
+		<h3>How do I use it?</h3>
+		Open a bucket, which is simply a set of passwords. The Id of the bucket is a unique identifier for a bucket which can be accessed by anyone using an URL like this:</br></br>
+
+		https://passec.ahkpro.dk/show.html?b=mybucket</br></br>
+
+		"Is that secure?" - you might ask. The answer is yes, because every entry in a bucket is encrypted with a password (or sentence) of your choosing. If someone else opens your bucket, they can only see the passwords that they can decrypt using whatever password they enter, keeping your passwords accessible to only you. If you do not enter an ID, a random one will be generated for you. Just remember to bookmark it! <br/>
+
+		All buckets that you access will be cached locally on your device and the site is developed to be accessed offline, so even if we some day pull the plug on this site, you can still access your passwords.
+
+		<h3>How secure is it?</h3>
+		Very. The passwords are encrypted locally on your computer using an AES 256-bit encryption. The only time your passwords aren't encrypted, is when you open your list of passwords and enter the password to decrypt. The only information that are sent to our server is your bucket ID and a long encrypted string for every entry into the bucket. So your passwords are secure even if our servers are compromised or your computer gets stolen!
+
+		<h3>How does it work?</h3>
+		A bucket is a list of entries. An entry can be either an added password, a trashed password or a modified password. It is not possible to delete or modify these entries and only those decryptable with your password will be used to generate your list of passwords. So noone else can delete or edit your passwords without your decryption password.<br/>
+		Every entry is entirely encrypted and without the password, it is not even possible to know which type of entry it is. Whenever you synchronize with the server, every entry the server doesn't have gets stored in our database. These entries will then be synchronized to other clients accessing that bucket. When you enter a password for a bucket, the client will attempt to decrypt every entry. Only those successful will be used to generate your list of passwords.
+
+
+		<h3>Can I backup my passwords?</h3>
+		The data is stored securly on our server in the Microsoft Azure cloud and also cached on every client you have used to access your bucket(s). However, if you want a backup, it is possible. For now, we do not have a button for it, but you can open your browser development tool and enter "lastLoadedEncryptedPasswords" in the console if you want an encrypted backup of your passwords or "passwords" for a decrypted. It is, obviously, only possible to backup the passwords when you have entered the correct password.
+
+		<h3>Is there an app available?</h3>
+		Not exactly. However, if you are using Firefox you should see a link to "Install app" in the left side right now, which will install it as an Open Web App.<br/>
+		If you are  using Chrome, you can choose to "Add to desktop", which will make it behave like an app.
+
+		<h3>Where is the old version?</h3>
+		The old version is a bit more mobile-friendly, but lags a lot of the grouping and searching functionality of the new version. If you want to use it, it is still working and fully compatible with the new version (just use the same bucket ID) at:<br/>
+		<a href="/index_old.html">https://passec.ahkpro.dk/index_old.html</a>
+
+		<br/>
+		<br/>
+		<br/>
+	</div>
+</div>
+
+<div id="bucketprompt" class="popup">
+	<div class="content">
+		Please enter a bucket ID:<br>
+		<input type="text" id="openbucketid"/><br>
+		<button id="bucketok">Ok</button>
+		<button id="bucketcancel">Cancel</button>
+	</div>
+</div>
+
+</body>
+</html>

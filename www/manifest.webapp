@@ -1,0 +1,14 @@
+{
+  "name": "Passec",
+  "description": "Passec - Secure Password Keeper",
+  "launch_path": "/show.html",
+  "icons": {
+    "196": "/img/lock_196.png",
+    "128": "/img/lock_128.png"
+  },
+  "developer": {
+    "name": "Anders Houbak Kristiansen",
+    "url": "https://ahkpro.dk"
+  },
+  "default_locale": "en"
+}

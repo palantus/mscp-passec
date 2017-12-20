@@ -1,0 +1,105 @@
+<!doctype html>
+<html manifest="/passec/manifest_old.appcache">
+<head>
+<meta charset="utf-8" />
+	<title>Passec</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=10,IE=9,IE=8,IE=edge" />
+	<meta name="viewport" content="width=device-width, user-scalable=no">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+
+	<link rel="icon" sizes="196x196" href="/passec/img/lock_196.png">
+	<link rel="apple-touch-icon" sizes="196x196" href="/passec/img/lock_196.png" />
+	<link rel="icon" sizes="128x128" href="/passec/img/lock_128.png">
+	<link rel="apple-touch-icon" sizes="128x128" href="/passec/img/lock_128.png" />
+	
+	<link rel="stylesheet" type="text/css" href="/passec/css/passec_old.css" />
+	<link rel="stylesheet" type="text/css" href="/css/popupcreator.css" />
+	
+	<script src="/js/jquery.min.js"></script>
+	<script src="/js/all.js"></script>
+	<script src="/passec/js/passec_old.js"></script>
+	
+	<script>
+	$(function() {
+		init();
+	});
+
+	</script>
+</head>
+<body>
+	<div id="topbar">
+		<div id="topleft">
+			<button id="openbucket">Open bucket</button>
+			<button id="back" style="display:none">Back</button>
+		</div>
+		<span id="offline">Offline</span>
+		<!--<span id="pagetitle">Passec</span>-->
+		<div id="topright">
+			<button id="addpass" style="display: none;">Add</button>
+		</div>
+	</div>
+	
+	<div id="content">
+		<div id="bucketpasswordcontainer">
+			<p>Please enter a password or sentence for encryption/decryption: </p>
+			<input id="bucketpassword" type="password" />
+			<button id="bucketpasswordok">Ok</button>
+			<button id="bucketpasswordshowhidechars">Show what you type</button>
+		</div>
+		<table id="maintable" class="maintable">
+			<thead><tr><th class='title' colspan="2">Passwords</th></tr></thead>
+			<tbody></tbody>
+		</table>
+		<table id="trashtable" class="maintable">
+			<thead><tr><th class='title' colspan="2">Trash</th></tr></thead>
+			<tbody></tbody>
+		</table>
+		<div id="helptext" style="display: none;">
+			<h1>Passec</h1>
+
+			<h3>What is Passec?</h3>
+			Passec is a password manager which is designed to be very easy to use across all platforms and, of course, very secure. 
+
+			<h3>How to use it?</h3>
+			Open a bucket, which is simply a set of passwords. The Id of the bucket is a unique identifier for a bucket which can be accessed by anyone using an URL like this:</br></br>
+
+			http://ahkpro.dk/passec?b=mybucket</br></br>
+
+			"Is that secure?" - you might ask. The answer is yes, because every entry in a bucket is encrypted with a password (or sentence) of your choosing. If someone else opens your bucket, they can only see the passwords that they can decrypt using whatever password they enter, keeping your passwords accessible to only you. If you do not enter an ID, a random one will be generated for you. Just remember to bookmark it! <br/>
+
+			All buckets that you access will be cached locally on your device and the site is developed to be accessed offline, so even if we some day pull the plug on this site, you can still access your passwords.
+
+			<h3>How secure is it?</h3>
+			Very. The passwords are encrypted locally on your computer using an AES 256-bit encryption. The only time your passwords aren't encrypted, is when you open your list of passwords and enter the password to decrypt. The only information that are sent to our server is your bucket ID and a long encrypted string for every entry into the bucket. So your passwords are secure even if our servers are compromised or your computer gets stolen!
+
+			<h3>How does it work?</h3>
+			A bucket is a list of entries. An entry can be either an added password, a trashed password or a modified password. It is not possible to delete or modify these entries and only those decryptable with your password will be used to generate your list of passwords. So noone else can delete or edit your passwords without your decryption password.<br/>
+			Every entry is entirely encrypted and without the password, it is not even possible to know which type of entry it is. Whenever you synchronize with the server, every entry the server doesn't have gets stored in our database. These entries will then be synchronized to other clients accessing that bucket. When you enter a password for a bucket, the client will attempt to decrypt every entry. Only those successful will be used to generate your list of passwords.
+
+
+			<h3>Can I backup my passwords?</h3>
+			The data is stored securly on our server in the Microsoft Azure cloud and also cached on every client you have used to access your bucket(s). However, if you want a backup, it is possible. For now, we do not have a button for it, but you can open your browser development tool and enter "lastLoadedEncryptedPasswords" in the console if you want an encrypted backup of your passwords or "passwords" for a decrypted. It is, obviously, only possible to backup the passwords when you have entered the correct password.
+
+			<h3>Keyboard shortcuts</h3>
+			<ul>
+				<li>a - add password</li>
+				<li>s - sync</li>
+				<li>t - show/hide trash</li>
+				<li>l - lock bucket</li>
+				<li>o - open bucket</li>
+				<li>1-9 - show password 1-9</li>
+			</ul>
+
+		</div>
+	</div>
+	
+	<div id="bottombar" style="display: none;">
+		<div id="bottomleft">
+			<button id="showtrash">Show Trash</button>
+			<button id="dosync">Sync</button>
+			<button id="lockbucket">Lock</button>
+		</div>
+	</div>
+</body>
+</html>
