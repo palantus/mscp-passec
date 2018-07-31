@@ -12,7 +12,7 @@ var uniqueTags = {};
 var delayTimer = null;
 
 async function init(){
-	//installServiceWorker();
+	//installServiceWorker(); //TODO: enable again
 	await mscp.ready;
 
 	if(getUrlVar("b") != undefined){
@@ -20,7 +20,7 @@ async function init(){
 	} else if(localStorage["FFAppBucket"]){
 		curBucket = localStorage["FFAppBucket"];
 	} else {
-		window.location = "/passec/";
+		window.location = "/";
 	}
 
 	if(curBucket){
