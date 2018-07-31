@@ -3,7 +3,7 @@
  "version": "1.0.0",
  "main": "main.js",
  "dependencies": {
-  "sqlite3": "*",
-  "mscp": "*"
+  "mscp": "*",
+  "sqlite3": "^4.0.2"
  }
 }

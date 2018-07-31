@@ -12,6 +12,7 @@ var uniqueTags = {};
 var delayTimer = null;
 
 async function init(){
+	installServiceWorker();
 	await mscp.ready;
 
 	if(getUrlVar("b") != undefined){
@@ -681,4 +682,23 @@ function saveAs(uri, filename) {
 function backup(){
   alert("This downloads a backup with the content of all passwords in the current bucket");
   saveAs('data:application/json,' + encodeURIComponent(JSON.stringify(passwords, null, 4)), "passec_backup.json")
+}
+
+function installServiceWorker(){
+	if ('serviceWorker' in navigator) {
+	  navigator.serviceWorker.register('/sw.js', { scope: '/' }).then(function(reg) {
+
+	    if(reg.installing) {
+	      console.log('Service worker installing');
+	    } else if(reg.waiting) {
+	      console.log('Service worker installed');
+	    } else if(reg.active) {
+	      console.log('Service worker active');
+	    }
+
+	  }).catch(function(error) {
+	    // registration failed
+	    console.log('Registration failed with ' + error);
+	  });
+	}
 }
