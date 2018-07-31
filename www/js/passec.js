@@ -12,7 +12,7 @@ var uniqueTags = {};
 var delayTimer = null;
 
 async function init(){
-	installServiceWorker();
+	//installServiceWorker();
 	await mscp.ready;
 
 	if(getUrlVar("b") != undefined){
