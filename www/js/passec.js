@@ -257,7 +257,7 @@ function initFunctionality(){
 	};
 
 	$("#maintitle").click(function(){
-		window.location = "/passec";
+		window.location = "/";
 	})
 }
 
