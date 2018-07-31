@@ -31,7 +31,9 @@ self.addEventListener('fetch', function(event) {
         let responseClone = response.clone();
 
         caches.open('v2').then(function (cache) {
-          cache.put(event.request, responseClone);
+          if(event.request.method != "POST"){
+            cache.put(event.request, responseClone);
+          }
         });
         return response;
       }).catch(async function (e) {
