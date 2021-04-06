@@ -30,7 +30,10 @@ async function init(){
     }
 
 		$("#keyprompt").fadeIn(() => {
-			$("#bucketpassword").focus();
+      if(localStorage["enckey"])
+			  $("#bucketpasswordok").focus();
+      else
+        $("#bucketpassword").focus();
 		});
 
 		$("#bucketpassword").keydown(function(e){
