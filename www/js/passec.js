@@ -24,6 +24,9 @@ async function init(){
 	}
 
 	if(curBucket){
+    if(localStorage["enckey"])
+      $("#bucketpassword").val(localStorage["enckey"])
+
 		$("#keyprompt").fadeIn(() => {
 			$("#bucketpassword").focus();
 		});
@@ -38,6 +41,7 @@ async function init(){
 			password = $("#bucketpassword").val();
 			if(password){
 				$("#keyprompt").hide();
+        localStorage["enckey"] = $("#storepassword").is(':checked') ? $("#bucketpassword").val() : "";
 				load();
 				sync();
 				refreshPasswords();
@@ -154,7 +158,7 @@ function initFunctionality(){
 
 	$("#addpass").click(function(){
 		var newId = guid();
-		changes.push({id: newId, type: 1, orderIdx: 1, title: "New password", username: "", password: "", tags: ""});
+		changes.push({id: newId, type: 1, orderIdx: 1, title: "", username: "", password: "", tags: ""});
 		onChange();
 
 		showPass(newId);
@@ -500,13 +504,13 @@ function refreshPasswords(){
 	for(i in visiblePasswords){
 		var tr = $("<tr/>");
 		var td = $("<td/>");
-		td.html(visiblePasswords[i].title);
+		td.text(visiblePasswords[i].title || "<empty>");
 		tr.data("pass", visiblePasswords[i]);
 
 
 		tr.click(function(){
 			var pass = $(this).data("pass");
-			showPass(pass.id, true);
+			showPass(pass.id, isMobile());
 		});
 
 		tr.append(td);
@@ -611,15 +615,15 @@ function showPass(id, preventFocus){
 		return;
 
 	$("#passwordshow").data("pass", pass);
-	$("#passwordshow").fadeIn("fast");
+	$("#passwordshow").fadeIn("fast", () => {
+    if(preventFocus !== true)
+      $("#curpassword_title").focus();
+  });
 
 	$("#curpassword_title").val(pass.title);
 	$("#curpassword_username").val(pass.username);
 	$("#curpassword_password").val(pass.password);
 	$("#curpassword_tags").val(pass.tags);
-
-	if(preventFocus !== true)
-		$("#curpassword_title").focus();
 
 	$("#curpassword_save").removeAttr("disabled")
 	$("#curpassword_trash").removeAttr("disabled")
@@ -630,8 +634,8 @@ function isMobileOrNarrow(){
 }
 
 function generatePassword() {
-    var length = 12,
-        charset = "abcdefghijklnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+    var length = 15,
+        charset = "abcdefghijklnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789&%¤#@€;:_-*+",
         retVal = "";
     for (var i = 0, n = charset.length; i < length; ++i) {
         retVal += charset.charAt(Math.floor(Math.random() * n));

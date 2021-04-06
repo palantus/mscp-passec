@@ -10,9 +10,9 @@ class Handler{
     this.global.setup = await new Promise((r) => fs.readFile(path.join(__dirname, "setup.json"), "utf-8", (err, file) => r(JSON.parse(file))))
 
     if(!this.global.setup.databasefile)
-      throw "databasefile not entered in setup.json"
+      console.log('databasefile not entered in setup.json. "data.sqlite3" will be used instead')
 
-    let dbFile = path.resolve(this.global.setup.databasefile)
+    let dbFile = path.resolve(this.global.setup.databasefile || "data.sqlite3")
 
     console.log("Trying to open database file: " + dbFile)
 
