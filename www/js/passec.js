@@ -24,8 +24,10 @@ async function init(){
 	}
 
 	if(curBucket){
-    if(localStorage["enckey"])
+    if(localStorage["enckey"]){
       $("#bucketpassword").val(localStorage["enckey"])
+      $("#storepassword").prop("checked", true)
+    }
 
 		$("#keyprompt").fadeIn(() => {
 			$("#bucketpassword").focus();
